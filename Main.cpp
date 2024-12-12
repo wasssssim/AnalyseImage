@@ -1,7 +1,5 @@
 #include <opencv2/opencv.hpp>      // Fonctions principales d'OpenCV
-#include <opencv2/highgui.hpp>    // Contient imshow et waitKey
-#include <opencv2/imgcodecs.hpp>  // Contient imread et imwrite
-#include <opencv2/imgproc.hpp>    // Contient les fonctions de traitement d'image
+
 #include <iostream>
 
 int main() {
