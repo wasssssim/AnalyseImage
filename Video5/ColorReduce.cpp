@@ -99,7 +99,7 @@ void ColorReduce6(cv::Mat img,int div=64){
     }
 
 }
-void ColorReduce6(cv::Mat img,int div=64){
+void ColorReduce7(cv::Mat img,int div=64){
 
     int nl= img.rows;
     int nc= img.cols*img.channels();
