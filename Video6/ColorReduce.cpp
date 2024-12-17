@@ -8,34 +8,41 @@
 
 void ColorReduce10(cv::Mat img,int div=64){
 
-    int nl= img.rows;
-    int nc= img.cols*img.channels();
-    
-    // vérifier si l'image est continue
-    // (c'est-à-dire s'il n'y a pas de pixels de remplissage)
-    if(img.isContinuous()){
-        img.reshape(1,1);
-
-    }
-
 
     // n est le nombre de bits pour représenter div 
     int n= static_cast<int>(log(static_cast<double>(div))/log(2.0)+0.5);
     u_char mask= 0xFF<<n; 
     u_char div2= div>>1; 
 
-    for(int j=0;j<nl;j++){
+    cv::Mat_<cv::Vec3b>::iterator it= img.begin<cv::Vec3b>();
+    cv::Mat_<cv::Vec3b>::iterator itend= img.end<cv::Vec3b>();
 
-        // pointeur sur la ligne j
-        uchar* data= img.ptr<uchar>(j);
-
-        // parcourir chaque pixel de la ligne j
-        for(int i=0;i<nc;i++){
+    for(;it!=itend;++it){
+        // diviser la valeur du pixel par div
+        (*it)[0]&= mask;
     
-                // diviser la valeur du pixel par div
-                *data &= mask;
-                *data++ += div2;
-        }
+        (*it)[0]+= div2;
+
+        (*it)[1]&= mask;
+        (*it)[1]+= div2;
+
+        (*it)[2]&= mask;
+        (*it)[2]+= div2;
+    }
+
+}
+
+void ColorReduce11(cv::Mat img,int div=64){
+    cv::Mat_<cv::Vec3b> cimg= img;
+    cv::Mat_<cv::Vec3b>::iterator it= img.begin<cv::Vec3b>();
+    cv::Mat_<cv::Vec3b>::iterator itend= img.end<cv::Vec3b>();
+    uchar div2= div>>1;
+
+    for(;it!=itend;++it){
+        // diviser la valeur du pixel par div
+        (*it)[0]= (*it)[0]/div*div+div2;
+        (*it)[1]= (*it)[1]/div*div+div2;
+        (*it)[2]= (*it)[2]/div*div+div2;
     }
 
 }
